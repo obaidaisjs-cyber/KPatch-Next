@@ -6,7 +6,7 @@ on:
       boot_url:
         description: 'boot url'
         required: true
-        default: 'https://catbox.moe'
+        default: 'https://files.catbox.moe/x5l8po.img'
 
 jobs:
   patch_boot:
