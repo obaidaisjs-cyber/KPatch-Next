@@ -6,7 +6,7 @@ on:
       boot_url:
         description: 'boot url'
         required: true
-        default: 'https://files.catbox.moe/x5l8po.img'
+        default: 'https://catbox.moe'
 
 jobs:
   patch_boot:
@@ -14,17 +14,17 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Setup Tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libelf-dev clang lld wget
+          sudo apt-get install -y wget
 
-      - name: Compile KPatch
+      - name: Download KPatch Executable
         run: |
-          make -C tools/kpatch
+          mkdir -p tools/kpatch
+          wget -O tools/kpatch/kpatch https://github.com || wget -O tools/kpatch/kpatch https://github.com
+          chmod +x tools/kpatch/kpatch
 
       - name: Download User Boot
         run: |
@@ -39,4 +39,3 @@ jobs:
         with:
           name: Patched_Boot_Poco_X5_Pro
           path: patched_boot.img
-          
