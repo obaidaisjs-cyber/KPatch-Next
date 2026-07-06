@@ -19,9 +19,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y bc bison flex libssl-dev libelf-dev
 
-      - name: Find defconfig
-        run: |
-          find kernel -iname "*redwood*defconfig*"
+         - name: Find defconfig
+  run: |
+    echo "=== كل ملفات defconfig تحت arm64 ==="
+    find kernel -path "*arch/arm64/configs*" -iname "*defconfig*"
+    echo "=== محتوى مجلد arm64/configs بالكامل ==="
+    ls -la kernel/arch/arm64/configs/ 2>/dev/null
+    find kernel -path "*arch/arm64/configs/vendor*" -iname "*defconfig*"
+        
+          
 
       - name: Attempt Build
         run: |
