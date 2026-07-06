@@ -1,0 +1,25 @@
+name: Check Kernel Source Completeness
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check_source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Kernel Source
+        run: |
+          git clone --depth 1 -b redwood-s-oss https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git kernel
+          git clone --depth 1 -b redwood-s-oss https://github.com/MiCode/kernel_devicetree.git kernel/devicetree
+          git clone --depth 1 -b redwood-s-oss https://github.com/MiCode/vendor_qcom_opensource_wlan.git kernel/wlan
+          git clone --depth 1 -b redwood-s-oss https://github.com/MiCode/kernel_build.git kernel/build
+
+      - name: Check Touchscreen Driver
+        run: |
+          echo "=== Touchscreen files ==="
+          find kernel -iname "*touch*" -path "*drivers*" -exec ls -la {} \;
+
+      - name: Check Charging Driver
+        run: |
+          echo "=== Charging files ==="
+          find kernel -iname "*charg*" -path "*drivers*" -exec ls -la {} \;
